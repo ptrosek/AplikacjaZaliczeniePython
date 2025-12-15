@@ -1,0 +1,1 @@
+Calculator based on an example provided here: https://github.com/Textualize/textual/blob/main/examples/calculator.py

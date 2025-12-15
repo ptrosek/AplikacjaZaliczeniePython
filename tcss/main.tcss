@@ -1,0 +1,28 @@
+#calculator-grid {
+    layout: grid;
+    grid-size: 4;
+    grid-gutter: 1;
+    grid-rows: 2fr 1fr 1fr 1fr 1fr 1fr;
+    height: 100%;
+    width: 100%;
+}
+
+Button {
+    height: 100%;
+    width: 100%;
+}
+
+#numbers {
+    column-span: 4;
+    height: 100%;
+    text-align: right;
+    content-align: right middle;
+}
+
+#number-0 {
+    column-span: 2;
+}
+
+.placeholder-text {
+    padding: 1;
+}
