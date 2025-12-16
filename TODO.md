@@ -1,0 +1,3 @@
+* Add timer functionality apart from the stopwatch and include alarms when time elapsed
+* Add approximation reading time functionality based on WPM - of a randomly selected set of sentences (at least 15 words to max 50) display the WPM result and then a calculated time it would take you to read the text
+* As the second additional feature add https://en.wikipedia.org/wiki/Automated_readability_index dummy version assuming words are divided by spaces and sentences end in ?.!
