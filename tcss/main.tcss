@@ -1,4 +1,5 @@
 #calculator-grid {
+    text-style: bold;
     layout: grid;
     grid-size: 4;
     grid-gutter: 1;
@@ -12,8 +13,22 @@ Button {
     width: 100%;
 }
 
+.operation-button {
+    color: white;
+    background: red 80%;
+    text-style: bold;
+}
+
+#left_number {
+    column-span: 1;
+    height: 100%;
+    text-align: left;
+    content-align: left middle;
+    border-right: solid white;
+}
+
 #numbers {
-    column-span: 4;
+    column-span: 3;
     height: 100%;
     text-align: right;
     content-align: right middle;

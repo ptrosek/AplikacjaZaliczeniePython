@@ -4,7 +4,7 @@ from textual.app import ComposeResult
 from textual.containers import Container
 from textual.css.query import NoMatches
 from textual.reactive import var
-from textual.widgets import Button, Digits
+from textual.widgets import Button, Digits, Log
 
 class Calculator(Container):
     """A working 'desktop' calculator widget."""
@@ -15,7 +15,7 @@ class Calculator(Container):
     right = var(Decimal("0"))
     value = var("")
     operator = var("plus")
-
+    
     NAME_MAP = {
         "asterisk": "multiply",
         "slash": "divide",
@@ -49,29 +49,30 @@ class Calculator(Container):
 
     def compose(self) -> ComposeResult:
         with Container(id="calculator-grid"):
+            yield Log(id="left_number", max_lines=10, highlight=True, auto_scroll=True)
             yield Digits(id="numbers")
-            # FIX: Only one button yielded here with id="clear"
             yield Button("AC", id="clear", variant="primary") 
             yield Button("+/-", id="plus-minus", variant="primary")
             yield Button("%", id="percent", variant="primary")
-            yield Button("÷", id="divide", variant="warning")
+            yield Button("÷", id="divide", classes="operation-button")
             yield Button("7", id="number-7", classes="number")
             yield Button("8", id="number-8", classes="number")
             yield Button("9", id="number-9", classes="number")
-            yield Button("×", id="multiply", variant="warning")
+            yield Button("×", id="multiply", classes="operation-button")
             yield Button("4", id="number-4", classes="number")
             yield Button("5", id="number-5", classes="number")
             yield Button("6", id="number-6", classes="number")
-            yield Button("-", id="minus", variant="warning")
+            yield Button("-", id="minus", classes="operation-button")
             yield Button("1", id="number-1", classes="number")
             yield Button("2", id="number-2", classes="number")
             yield Button("3", id="number-3", classes="number")
-            yield Button("+", id="plus", variant="warning")
+            yield Button("+", id="plus", classes="operation-button")
             yield Button("0", id="number-0", classes="number")
             yield Button(".", id="point")
-            yield Button("=", id="equals", variant="warning")
+            yield Button("=", id="equals", classes="operation-button")
 
     def on_mount(self) -> None:
+        self.query_one("#left_number", Log).write("Calculator Ready\n")
         self.query_one("#numbers", Digits).update(self.numbers)
         # Initialize the label
         self.watch_show_ac(self.show_ac)
@@ -122,6 +123,9 @@ class Calculator(Container):
             self.left = self.right = Decimal(0)
             self.operator = "plus"
             self.numbers = "0"
+            self.app.clear_history()
+            self.query_one("#left_number", Log).clear()
+            self.query_one("#left_number", Log).write("Calculator Reset\n")
         else:
             # C Behavior
             self.value = ""
@@ -134,7 +138,7 @@ class Calculator(Container):
             current_left = self.left
             current_right = self.right
             current_op = self.operator
-
+            print(f"CALCulating: {current_left} {current_op} {current_right}")
             if self.operator == "plus":
                 self.left += self.right
             elif self.operator == "minus":
@@ -147,6 +151,7 @@ class Calculator(Container):
             self.numbers = str(self.left)
 
             self.app.add_calculation(current_left, current_op, current_right, self.left)
+            self.query_one("#left_number", Log).write(f"{self.app.calc_history[-1][-2]} = {self.app.calc_history[-1][-1]}\n")
 
             self.value = ""
         except Exception:
@@ -154,6 +159,10 @@ class Calculator(Container):
 
     @on(Button.Pressed, "#plus,#minus,#divide,#multiply")
     def pressed_op(self, event: Button.Pressed) -> None:
+        if not self.value:
+            self.operator = event.button.id  # Just change the operator
+            print(f"CALC Operator changed to: {self.operator}")
+            return
         self.right = Decimal(self.value or "0")
         self._do_math()
         assert event.button.id is not None

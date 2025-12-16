@@ -2,7 +2,8 @@ from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer, TabbedContent, TabPane
 
 from widgets.calculator import Calculator
-from widgets.placeholders import Timer, ReadingPredictor, CalculatorHistory, OptionalFunction2
+from widgets.calculator_history import CalculatorHistory
+from widgets.placeholders import Timer, ReadingPredictor, OptionalFunction2
 
 import datetime
 
@@ -61,6 +62,15 @@ class MultifunctionApp(App):
         # B. Try to update the widget immediately if it exists
         try:
             self.query_one("#history_widget", CalculatorHistory).add_line(row_data)
+        except Exception:
+            pass
+
+    def clear_history(self):
+        """Clears the calculator history both in memory and in the display."""
+        self.calc_history.clear()
+        try:
+            table = self.query_one("#history_widget", CalculatorHistory).query_one("DataTable")
+            table.clear()
         except Exception:
             pass
 
