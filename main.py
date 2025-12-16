@@ -3,14 +3,16 @@ from textual.widgets import Header, Footer, TabbedContent, TabPane
 
 from widgets.calculator import Calculator
 from widgets.calculator_history import CalculatorHistory
-from widgets.placeholders import Timer, ReadingPredictor, OptionalFunction2
+from widgets.timer import Timer
+from widgets.placeholders import ReadingPredictor, OptionalFunction2
 
 import datetime
 
 class MultifunctionApp(App):
     """A multifunctional terminal application."""
-
+    
     CSS_PATH = "tcss/main.tcss"
+    
     BINDINGS = [("q", "quit", "Quit")]
 
     calc_history = []
@@ -26,7 +28,7 @@ class MultifunctionApp(App):
             with TabPane("Historia Kalkulatora", id="history"):
                 yield CalculatorHistory(id="history_widget")
             
-            with TabPane("Stoper/Minutnik", id="timer"):
+            with TabPane("Stoper", id="timer"):
                 yield Timer()
                 
             with TabPane("Przewidywanie Czasu", id="reader"):
@@ -37,6 +39,7 @@ class MultifunctionApp(App):
                 yield OptionalFunction2()
 
         yield Footer()
+    
     def add_calculation(self, left, operator, right, result):
         """Receives data from calculator, saves it, and updates the view."""
         

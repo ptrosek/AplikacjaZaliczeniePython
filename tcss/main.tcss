@@ -8,7 +8,7 @@
     width: 100%;
 }
 
-Button {
+.calc-button {
     height: 100%;
     width: 100%;
 }
@@ -40,4 +40,40 @@ Button {
 
 .placeholder-text {
     padding: 1;
+}
+
+
+Stopwatch {
+    background: $boost;
+    padding: 2;
+}
+
+Timer {
+    background: $boost;
+    padding: 2;
+    text-style: bold;
+    layout: grid;
+    grid-size: 4;
+    width: auto;
+    height: auto;
+    grid-rows: auto;
+    grid-columns: auto auto auto auto;
+    grid-gutter: 1;
+}
+
+#time-display {
+    align: center middle;
+    text-align: center;
+    color: $foreground-muted;
+}
+
+#timer-reset, #timer-start, #timer-stop {
+    width: auto;
+    height: auto;
+    padding: 1 2;
+    text-style: bold;
+}
+
+#timer-reset {
+    dock: right;
 }

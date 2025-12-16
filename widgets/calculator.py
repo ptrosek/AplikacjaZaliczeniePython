@@ -29,6 +29,9 @@ class Calculator(Container):
         "c": "clear",      # Mapped 'c' key to our new single button
     }
 
+    # Watchers
+    # Created using reactive var feature of Textual https://textual.textualize.io/guide/reactivity/ 
+    # These methods are called automatically when the variable changes.
     def watch_numbers(self, value: str) -> None:
         try:
             self.query_one("#numbers", Digits).update(value)
@@ -51,25 +54,25 @@ class Calculator(Container):
         with Container(id="calculator-grid"):
             yield Log(id="left_number", max_lines=10, highlight=True, auto_scroll=True)
             yield Digits(id="numbers")
-            yield Button("AC", id="clear", variant="primary") 
-            yield Button("+/-", id="plus-minus", variant="primary")
-            yield Button("%", id="percent", variant="primary")
-            yield Button("÷", id="divide", classes="operation-button")
-            yield Button("7", id="number-7", classes="number")
-            yield Button("8", id="number-8", classes="number")
-            yield Button("9", id="number-9", classes="number")
-            yield Button("×", id="multiply", classes="operation-button")
-            yield Button("4", id="number-4", classes="number")
-            yield Button("5", id="number-5", classes="number")
-            yield Button("6", id="number-6", classes="number")
-            yield Button("-", id="minus", classes="operation-button")
-            yield Button("1", id="number-1", classes="number")
-            yield Button("2", id="number-2", classes="number")
-            yield Button("3", id="number-3", classes="number")
-            yield Button("+", id="plus", classes="operation-button")
-            yield Button("0", id="number-0", classes="number")
-            yield Button(".", id="point")
-            yield Button("=", id="equals", classes="operation-button")
+            yield Button("AC", id="clear", variant="primary", classes="calc-button") 
+            yield Button("+/-", id="plus-minus", variant="primary", classes="calc-button")
+            yield Button("%", id="percent", variant="primary", classes="calc-button")
+            yield Button("÷", id="divide", classes="operation-button calc-button")
+            yield Button("7", id="number-7", classes="number calc-button")
+            yield Button("8", id="number-8", classes="number calc-button")
+            yield Button("9", id="number-9", classes="number calc-button")
+            yield Button("×", id="multiply", classes="operation-button calc-button")
+            yield Button("4", id="number-4", classes="number calc-button")
+            yield Button("5", id="number-5", classes="number calc-button")
+            yield Button("6", id="number-6", classes="number calc-button")
+            yield Button("-", id="minus", classes="operation-button calc-button")
+            yield Button("1", id="number-1", classes="number calc-button")
+            yield Button("2", id="number-2", classes="number calc-button")
+            yield Button("3", id="number-3", classes="number calc-button")
+            yield Button("+", id="plus", classes="operation-button calc-button")
+            yield Button("0", id="number-0", classes="number calc-button")
+            yield Button(".", id="point", classes="calc-button")
+            yield Button("=", id="equals", classes="operation-button calc-button")
 
     def on_mount(self) -> None:
         self.query_one("#left_number", Log).write("Calculator Ready\n")
