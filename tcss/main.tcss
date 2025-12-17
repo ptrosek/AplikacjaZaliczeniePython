@@ -48,7 +48,7 @@ Stopwatch {
     padding: 2;
 }
 
-Timer {
+StopwatchContainer {
     background: $boost;
     padding: 2;
     text-style: bold;
@@ -76,4 +76,56 @@ Timer {
 
 #timer-reset {
     dock: right;
+}
+
+CountdownTimer {
+    layout: grid;
+    grid-size: 3 4;
+    grid-columns: 1fr 3fr 1fr;
+    grid-rows: 1fr 1fr 1fr 1fr;
+    grid-gutter: 1;
+    width: 60%;
+    height: 60%;
+    min-height: 20;
+    border: thick $primary;
+    background: $surface;
+    padding: 1;
+}
+
+#countdown-timer-start {
+    row-span: 2;
+    width: 100%;
+    height: 100%;
+}
+
+#countdown-timer-input {
+    width: 100%;
+    height: 100%;
+}
+
+#countdown-timer-reset {
+    row-span: 4;
+    width: 100%;
+    height: 100%;
+}
+
+#countdown-timer-display {
+    row-span: 3;
+    width: 100%;
+    height: 100%;
+    content-align: center middle;
+    text-align: center;
+    background: $boost;
+    border: solid $secondary;
+}
+
+#countdown-timer-stop {
+    row-span: 2;
+    width: 100%;
+    height: 100%;
+}
+
+.expired #countdown-timer-display {
+    background: $error;
+    color: white;
 }

@@ -1,12 +1,15 @@
+import datetime
+
+from textual import on
 from textual.app import App, ComposeResult
 from textual.widgets import Header, Footer, TabbedContent, TabPane
 
 from widgets.calculator import Calculator
 from widgets.calculator_history import CalculatorHistory
-from widgets.timer import Timer
-from widgets.placeholders import ReadingPredictor, OptionalFunction2
+from widgets.stopwatch import StopwatchContainer
+from widgets.timer import CountdownTimer, CountdownTimerContainer
+from widgets.reading import ReadingPredictor
 
-import datetime
 
 class MultifunctionApp(App):
     """A multifunctional terminal application."""
@@ -29,14 +32,13 @@ class MultifunctionApp(App):
                 yield CalculatorHistory(id="history_widget")
             
             with TabPane("Stoper", id="timer"):
-                yield Timer()
+                yield StopwatchContainer()
+
+            with TabPane("Timer Odliczający", id="countdown"):
+                yield CountdownTimerContainer()
                 
             with TabPane("Przewidywanie Czasu", id="reader"):
                 yield ReadingPredictor()
-                
-                
-            with TabPane("Opcja 2", id="opt2"):
-                yield OptionalFunction2()
 
         yield Footer()
     
@@ -76,6 +78,15 @@ class MultifunctionApp(App):
             table.clear()
         except Exception:
             pass
+
+    # catches the default textual way of messaging from the CountdownTimer
+    @on(CountdownTimer.Expired)
+    def notify_user(self, message: CountdownTimer.Expired) -> None:
+        self.notify(
+            f"The {message.timer_name} has finished!",
+            title="Time's Up!",
+            severity="warning"
+        )
 
 if __name__ == "__main__":
     app = MultifunctionApp()
